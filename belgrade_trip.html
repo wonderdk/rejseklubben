@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Belgrade Boys Trip · Retro 90s Slav Vibe</title>
+<meta name="description" content="Offline itinerary web app, retro 90s Slavic web vibes, tuned for phones." />
+<style>
+/* === SLAVIC RETRO 90s VIBES, MOBILE-FIRST === */
+html,body{margin:0;padding:0;background:#000;color:#fff;font-family:"Arial Black", Impact, sans-serif;}
+body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.15), rgba(0,0,0,0) 40%);}
+
+#app{max-width:720px;margin:0 auto;padding:8px 8px 80px;}
+.header{position:sticky;top:0;z-index:99;background:linear-gradient(#330000,#000);border-bottom:3px ridge #ff0000;padding:8px;}
+.logo{display:flex;align-items:center;gap:8px}
+.logo h1{font-size:22px;margin:0; text-shadow:0 0 8px #ff2222, 0 0 16px #ff4444; letter-spacing:.5px}
+.sub{font-size:12px;color:#ffaaaa}
+
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.nav button{flex:1;min-width:45%;padding:10px 8px;background:#1a0000;border:3px outset #ff2222;color:#fff;border-radius:6px;font-weight:700;text-shadow:0 0 6px #ff3333;}
+.nav button.active{background:#ffe600;border-color:#ff0000;color:#220000;text-shadow:none}
+
+.marquee{margin:8px 0;background:#220000;border-top:3px ridge #ff0000;border-bottom:3px ridge #ff0000;overflow:hidden;white-space:nowrap}
+.marquee span{display:inline-block;padding:8px;color:#ffaaaa;animation:scroll 18s linear infinite}
+@keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+
+.btnbar{display:flex;gap:8px;margin:8px 0}
+.btn{flex:1;padding:10px;background:#220033;border:3px outset #ff59f8;color:#fff;border-radius:6px;font-weight:800;text-transform:uppercase}
+.btn.alt{background:#003313;border-color:#49ff9a}
+.btn.warn{background:#330000;border-color:#ff4d6d}
+
+.card{background:#0a0a0a;border:4px ridge #ff0000;border-radius:8px;padding:10px;margin:10px 0;box-shadow:0 0 18px rgba(255,0,0,.25)}
+.card h2{margin:0 0 6px 0;font-size:18px;color:#ffe600;text-shadow:0 0 6px #ffe600}
+.timeline{display:grid;gap:8px}
+.item{background:#050a14;border:3px groove #aa0000;border-radius:8px;padding:10px;position:relative}
+.time{position:absolute;right:8px;top:8px;background:#330000;border:2px solid #ff0000;padding:2px 6px;border-radius:4px;font-size:12px;color:#ffaaaa}
+.title{font-weight:800;margin-right:70px}
+.note{font-size:13px;color:#ffe6e6}
+.badge{display:inline-block;margin-left:6px;background:#660000; color:#fff; padding:2px 6px;border:2px outset #ff0000;border-radius:6px;font-size:11px}
+.links a{color:#ffe600;text-decoration:underline}
+
+.footer{position:fixed;left:0;right:0;bottom:0;background:#000;border-top:3px ridge #ff0000;padding:6px 8px;color:#ffaaaa;font-size:12px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;background:#220000;border:3px ridge #ff0000;border-radius:8px;padding:8px 10px;display:none;color:#ffaaaa}
+
+.icon{width:18px;height:18px;image-rendering:pixelated;vertical-align:-3px;margin-right:6px}
+.ico{display:inline-block;width:18px;height:18px;background-size:cover;image-rendering:pixelated;margin-right:6px}
+
+*{touch-action:manipulation}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="logo">
+      <div>
+        <h1>Belgrade Boys Trip</h1>
+        <div class="sub">Oct 23 → 26 · Villa Saga Paradiso · 14 comrades</div>
+      </div>
+    </div>
+    <div class="nav" id="nav"></div>
+  </div>
+
+  <div class="marquee"><span>💀 Slavic hardbass loading… Burek and rakija required for entry 💀</span></div>
+
+  <div class="btnbar">
+    <button class="btn alt" onclick="printIt()">🖨 Print / Save PDF</button>
+    <button class="btn" onclick="confetti()">🥟 Party Mode</button>
+    <button class="btn warn" onclick="toggleHangover()">🤕 Hangover Mode</button>
+  </div>
+
+  <div id="content"></div>
+
+  <div class="footer">Works offline · Links wake up when online · Made with ❤️ + rakija</div>
+  <div id="toast" class="toast"></div>
+</div>
+
+<script>
+// === tiny pixel icons (inline SVGs) ===
+const ICONS={
+  beer:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='5' y='4' width='6' height='9' fill='#ffcc00'/><rect x='4' y='6' width='1' height='6' fill='#ffffff'/><rect x='5' y='3' width='6' height='1' fill='#ffee88'/><rect x='7' y='5' width='2' height='1' fill='#ffd34d'/></svg>`)}`,
+  vodka:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='6' y='2' width='4' height='2' fill='#99d9ea'/><rect x='5' y='4' width='6' height='9' fill='#cfefff'/><rect x='5' y='12' width='6' height='1' fill='#99d9ea'/></svg>`)}`,
+  burek:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><circle cx='8' cy='8' r='5' fill='#d8a84f'/><path d='M3 8h10' stroke='#b3782a' stroke-width='1'/><path d='M5 10l6-6' stroke='#b3782a' stroke-width='1'/></svg>`)}`,
+  ak:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='2' y='7' width='12' height='2' fill='#804000'/><rect x='9' y='6' width='2' height='4' fill='#444'/><rect x='12' y='6' width='2' height='3' fill='#666'/></svg>`)}`,
+  dance:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><circle cx='8' cy='4' r='2' fill='#ff4081'/><rect x='7' y='6' width='2' height='4' fill='#ff4081'/><rect x='5' y='7' width='2' height='2' fill='#ff4081'/><rect x='9' y='9' width='2' height='2' fill='#ff4081'/></svg>`)}`,
+  taxi:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='2' y='7' width='12' height='5' fill='#ffe600'/><rect x='4' y='6' width='3' height='2' fill='#222'/><rect x='9' y='6' width='3' height='2' fill='#222'/><circle cx='5' cy='12' r='1' fill='#333'/><circle cx='11' cy='12' r='1' fill='#333'/></svg>`)}`,
+  plane:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><path d='M2 9l12-3-4 3 4 2-12-2z' fill='#9ad7ff'/></svg>`)}`
+};
+
+function iconFor(it){
+  const t=(it.title+ ' ' + (it.badge||'') ).toLowerCase();
+  if(t.includes('fly')) return ICONS.plane;
+  if(t.includes('taxi')) return ICONS.taxi;
+  if(t.includes('dogma')||t.includes('gunners')||t.includes('pivo')||t.includes('beer')) return ICONS.beer;
+  if(t.includes('kafana')||t.includes('burek')||t.includes('lunch')||t.includes('dinner')||t.includes('food')) return ICONS.burek;
+  if(t.includes('splav')||t.includes('dance')||t.includes('party')) return ICONS.dance;
+  if(t.includes('shoot')) return ICONS.ak;
+  if(t.includes('rakija')||t.includes('party mode')) return ICONS.vodka;
+  return null;
+}
+
+const PLAN=[
+  {date:'Thu 23/10',label:'Arrival & Warm‑up',items:[
+    {t:'11:30',title:'Meet at airport (CPH)',note:'Group photo now, because later: chaos.'},
+    {t:'13:15–17:30',title:'Fly to Belgrade',note:'Practice saying “Živeli!” (cheers).'},
+    {t:'18:10',title:'Transfer → Villa Saga Paradiso',note:'Claim beds using the ancient “shoe on pillow” ritual.'},
+    {t:'19:30',title:'Taxi downtown & dinner',badge:'Food',note:'Pick: Ambar or Manufaktura.'},
+    {t:'22:00',title:'Oddball bars',badge:'Bar Crawl',note:'Blaznavac → Ljutic → Rakia Bar'}
+  ]},
+  {date:'Fri 24/10',label:'Culture → Craft Beer → Splav',items:[
+    {t:'09:30',title:'Breakfast @ Villa',note:'Coffee, eggs, tactical ibuprofen.'},
+    {t:'11:00–14:00',title:'Yugo Tour',badge:'Weird Culture',note:'Rattly Yugos, brutalist icons, Tito tales.'},
+    {t:'14:30',title:'Late lunch – Kafana ?',badge:'Kafana',note:'Ćevapi, kajmak, rakija.'},
+    {t:'16:30',title:'Walk the center',note:'Knez Mihailova → Kalemegdan (sunset).'},
+    {t:'19:30',title:'Craft Beer Dinner @ Dogma',badge:'Dinner + Beer',note:'Burgers, BBQ, veggie options.'},
+    {t:'21:30',title:'Gunners → Samo Pivo',badge:'Beer Crawl',note:'Curated taps → then the biggest selection.'},
+    {t:'00:00+',title:'Splav: Ona Moja',badge:'Dance',note:'No dress code. Folk band + sing‑alongs.'}
+  ]},
+  {date:'Sat 25/10',label:'Backyard Olympics → Shooting → Skadarlija',items:[
+    {t:'09:00',title:'Breakfast @ Villa',note:'Hydrate. Stretch. Regret nothing.'},
+    {t:'10:00–12:00',title:'Backyard Olympics',badge:'Sports',note:'Swimming relay, 3‑on‑3 hoops, penalties.'},
+    {t:'13:00',title:'Lunch by the river',badge:'Food',note:'Ambar / Frida / Pristan.'},
+    {t:'15:00–17:00',title:'Harborfront hangout / Creative silos',note:'Dorćol & Savamala murals.'},
+    {t:'18:00',title:'Shooting Range',badge:'Bang Bang',note:'AKs, pistols, snipers.'},
+    {t:'20:30 → late',title:'Skadarlija dinner → table party',badge:'Kafana',note:'Tri Šešira or Dva Jelena.'}
+  ]},
+  {date:'Sun 26/10',label:'Chill, Pack, Depart',items:[
+    {t:'09:30',title:'Breakfast & Check‑out',note:'Leave the villa as you wish your liver looked.'},
+    {t:'10:30–13:00',title:'Free play: Zemun / Tesla / Coffee crawl',note:'Votes decide.'},
+    {t:'13:30',title:'Taxi to airport',badge:'Logistics',note:'Kiss the Danube goodbye.'},
+    {t:'17:15–19:35',title:'Flight to Copenhagen',note:'Share photos. Delete some. Keep the legends.'}
+  ]}
+];
+
+let active=0;
+const nav=document.getElementById('nav');
+const content=document.getElementById('content');
+
+function renderNav(){
+  nav.innerHTML='';
+  PLAN.forEach((d,i)=>{
+    const b=document.createElement('button');
+    b.textContent=d.date; if(i===active) b.classList.add('active');
+    b.onclick=()=>{active=i; renderNav(); renderDay(); window.scrollTo({top:0,behavior:'smooth'})};
+    nav.appendChild(b);
+  })
+}
+
+function renderDay(){
+  const d=PLAN[active];
+  content.innerHTML='';
+  const card=document.createElement('div'); card.className='card';
+  card.innerHTML=`<h2>${d.date} · <span style="color:#ffaaaa">${d.label}</span></h2>`;
+  const tl=document.createElement('div'); tl.className='timeline';
+  d.items.forEach(it=>{
+    const el=document.createElement('div'); el.className='item';
+    const ico=iconFor(it); 
+    el.innerHTML=`<div class='time'>${it.t}</div><div class='title'>${ico?`<span class='ico' style='background-image:url(${ico})'></span>`:''}${it.title}${it.badge?` <span class='badge'>${it.badge}</span>`:''}</div><div class='note'>${it.note||''}</div>`;
+    tl.appendChild(el);
+  })
+  card.appendChild(tl); content.appendChild(card);
+}
+
+renderNav(); renderDay();
+
+function printIt(){ window.print(); toast('Save as PDF for comrades.'); }
+
+function confetti(){
+  const N=120; for(let i=0;i<N;i++){const d=document.createElement('div');
+    const s=4+Math.random()*6; d.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-10px;width:${s}px;height:${s}px;background:hsl(${Math.random()*360},90%,60%);z-index:9999;`; document.body.appendChild(d);
+    d.animate([{transform:'translateY(0)'},{transform:'translateY(110vh) rotate(720deg)'}],{duration:2000+Math.random()*2000,easing:'ease-in'}).onfinish=()=>d.remove();}
+  toast('Slav squat confetti deployed!');
+}
+
+let hang=false; function toggleHangover(){ hang=!hang; document.body.style.filter=hang?'saturate(.75) brightness(.9)':'none'; toast(hang?'Hangover Mode: soup & burek.':'Party Mode: vodka + hardbass!'); }
+
+function toast(msg){const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',2000)}
+</script>
+</body>
+</html>
