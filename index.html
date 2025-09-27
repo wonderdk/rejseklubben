@@ -5,13 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Belgrade Boys Trip · Retro 90s Slav Vibe</title>
 <meta name="description" content="Offline itinerary web app, retro 90s Slavic web vibes, tuned for phones." />
-
-<!-- PWA manifest + icons -->
-<meta name="theme-color" content="#330000">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png" sizes="192x192">
-<link rel="apple-touch-icon" href="icon-192.png">
-
 <style>
 /* === SLAVIC RETRO 90s VIBES, MOBILE-FIRST === */
 html,body{margin:0;padding:0;background:#000;color:#fff;font-family:"Arial Black", Impact, sans-serif;}
@@ -82,28 +75,15 @@ body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.15), rgb
 </div>
 
 <script>
-// Register service worker for PWA offline cache
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(console.error);
-  });
-}
-
 // === tiny pixel icons (inline SVGs) ===
 const ICONS={
-  beer:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='5' y='4' width='6' height='9' fill='#ffcc00'/><rect x='4' y='6' width='1' height='6' fill='#ffffff'/><rect x='5' y='3' width='6' height='1' fill='#ffee88'/><rect x='7' y='5' width='2' height='1' fill='#ffd34d'/></svg>`)}`
-  ,
-  vodka:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='6' y='2' width='4' height='2' fill='#99d9ea'/><rect x='5' y='4' width='6' height='9' fill='#cfefff'/><rect x='5' y='12' width='6' height='1' fill='#99d9ea'/></svg>`)}`
-  ,
-  burek:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><circle cx='8' cy='8' r='5' fill='#d8a84f'/><path d='M3 8h10' stroke='#b3782a' stroke-width='1'/><path d='M5 10l6-6' stroke='#b3782a' stroke-width='1'/></svg>`)}`
-  ,
-  ak:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='2' y='7' width='12' height='2' fill='#804000'/><rect x='9' y='6' width='2' height='4' fill='#444'/><rect x='12' y='6' width='2' height='3' fill='#666'/></svg>`)}`
-  ,
-  dance:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><circle cx='8' cy='4' r='2' fill='#ff4081'/><rect x='7' y='6' width='2' height='4' fill='#ff4081'/><rect x='5' y='7' width='2' height='2' fill='#ff4081'/><rect x='9' y='9' width='2' height='2' fill='#ff4081'/></svg>`)}`
-  ,
-  taxi:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='2' y='7' width='12' height='5' fill='#ffe600'/><rect x='4' y='6' width='3' height='2' fill='#222'/><rect x='9' y='6' width='3' height='2' fill='#222'/><circle cx='5' cy='12' r='1' fill='#333'/><circle cx='11' cy='12' r='1' fill='#333'/></svg>`)}`
-  ,
-  plane:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><path d='M2 9l12-3-4 3 4 2-12-2z' fill='#9ad7ff'/></svg>`)}`
+  beer:`data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='5' y='4' width='6' height='9' fill='#ffcc00'/><rect x='4' y='6' width='1' height='6' fill='#ffffff'/><rect x='5' y='3' width='6' height='1' fill='#ffee88'/><rect x='7' y='5' width='2' height='1' fill='#ffd34d'/></svg>")}`,
+  vodka:`data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='6' y='2' width='4' height='2' fill='#99d9ea'/><rect x='5' y='4' width='6' height='9' fill='#cfefff'/><rect x='5' y='12' width='6' height='1' fill='#99d9ea'/></svg>")}`,
+  burek:`data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><circle cx='8' cy='8' r='5' fill='#d8a84f'/><path d='M3 8h10' stroke='#b3782a' stroke-width='1'/><path d='M5 10l6-6' stroke='#b3782a' stroke-width='1'/></svg>")}`,
+  ak:`data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='2' y='7' width='12' height='2' fill='#804000'/><rect x='9' y='6' width='2' height='4' fill='#444'/><rect x='12' y='6' width='2' height='3' fill='#666'/></svg>")}`,
+  dance:`data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><circle cx='8' cy='4' r='2' fill='#ff4081'/><rect x='7' y='6' width='2' height='4' fill='#ff4081'/><rect x='5' y='7' width='2' height='2' fill='#ff4081'/><rect x='9' y='9' width='2' height='2' fill='#ff4081'/></svg>")}`,
+  taxi:`data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='2' y='7' width='12' height='5' fill='#ffe600'/><rect x='4' y='6' width='3' height='2' fill='#222'/><rect x='9' y='6' width='3' height='2' fill='#222'/><circle cx='5' cy='12' r='1' fill='#333'/><circle cx='11' cy='12' r='1' fill='#333'/></svg>")}`,
+  plane:`data:image/svg+xml;utf8,${encodeURIComponent("<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><path d='M2 9l12-3-4 3 4 2-12-2z' fill='#9ad7ff'/></svg>")}`
 };
 
 function iconFor(it){
@@ -118,7 +98,64 @@ function iconFor(it){
   return null;
 }
 
-const PLAN=[ /* … same itinerary items … */ ];
+// helper for links
+const L = {
+  villa: "https://maps.app.goo.gl/yUtziPhZFyddKQUe7",
+  ambar: "https://maps.app.goo.gl/7X8bT6n3XrjC5q1o6",
+  manufaktura: "https://maps.app.goo.gl/Xx3f5n2y7gqfY7yH8",
+  blaznavac: "https://maps.app.goo.gl/N1Z2y8Z3Q3dQdG2w9",
+  ljutic: "https://maps.app.goo.gl/4eF6yCv3cWqQ1EoQ6",
+  rakiaBar: "https://maps.app.goo.gl/6Q8a8xwyJQ6D3p5V6",
+  knez: "https://maps.app.goo.gl/6oCk27Gx6n7vha5E8",
+  kalemegdan: "https://maps.app.goo.gl/zG3xLhJj9y8q6i4T6",
+  dogma: "https://maps.app.goo.gl/2mVQk1F1k1QmU2Dq7",
+  gunners: "https://maps.app.goo.gl/8x3o2m7wq9dJ3n6u8",
+  samopivo: "https://maps.app.goo.gl/N1K8R1p5b8mT1k2F9",
+  onaMoja: "https://maps.app.goo.gl/ZbT7EBYH9B2Uyhh38",
+  frida: "https://maps.app.goo.gl/3a3m2jQqkEN5v3eH7",
+  silosi: "https://maps.app.goo.gl/5iQm4P1r7v5W1m9q7",
+  shootingSearch: "https://www.google.com/maps/search/shooting+range+belgrade",
+  triSesira: "https://maps.app.goo.gl/3j1r2fN6oH7s4v2x7",
+  dvaJelena: "https://maps.app.goo.gl/2r6j4Rr6M6i1r5oU9",
+  zemunGardos: "https://maps.app.goo.gl/ae2QWjv7o5kzU9Z8A",
+  tesla: "https://maps.app.goo.gl/a4o5bq9fYxWZtWZc8",
+  przionica: "https://maps.app.goo.gl/3g1yTHe2zK9r7o3P9",
+  airport: "https://maps.app.goo.gl/7jfjkqJkz6jFJH3p9",
+  kafanaFriday: "https://maps.app.goo.gl/bT5HBngdryAdDEbFA"
+};
+
+const PLAN=[
+  {date:'Thu 23/10',label:'Arrival & Warm-up',items:[
+    {t:'11:30',title:'Meet at airport (CPH)',note:'Group photo now, because later: chaos.'},
+    {t:'13:15–17:30',title:'Fly to Belgrade',note:'Practice saying “Živeli!” (cheers).'},
+    {t:'18:10',title:'Transfer → Villa Saga Paradiso',note:`<a href="${L.villa}" target="_blank">📍 Villa on Maps</a>. Claim beds using the ancient “shoe on pillow” ritual.`},
+    {t:'19:30',title:'Taxi downtown & dinner',badge:'Food',note:`Options: <a href="${L.ambar}" target="_blank">Ambar</a> or <a href="${L.manufaktura}" target="_blank">Manufaktura</a>.`},
+    {t:'22:00',title:'Oddball bars',badge:'Bar Crawl',note:`<a href="${L.blaznavac}" target="_blank">Blaznavac</a> → <a href="${L.ljutic}" target="_blank">Ljutic</a> → <a href="${L.rakiaBar}" target="_blank">Rakia Bar</a>`}
+  ]},
+  {date:'Fri 24/10',label:'Culture → Craft Beer → Splav',items:[
+    {t:'09:30',title:'Breakfast @ Villa',note:'Coffee, eggs, tactical ibuprofen.'},
+    {t:'11:00–14:00',title:'Yugo Tour',badge:'Weird Culture',note:`Pickup at the <a href="${L.villa}" target="_blank">villa</a>. Stories, brutalism, rattly cars.`},
+    {t:'14:30',title:'Late lunch – Kafana ?',badge:'Kafana',note:`Ćevapi, kajmak, rakija. <a href="${L.kafanaFriday}" target="_blank">📍 Lunch Kafana (Maps)</a>`},
+    {t:'16:30',title:'Walk the center',note:`<a href="${L.knez}" target="_blank">Knez Mihailova</a> → <a href="${L.kalemegdan}" target="_blank">Kalemegdan Fortress (sunset)</a>.`},
+    {t:'19:30',title:'Craft Beer Dinner @ Dogma',badge:'Dinner + Beer',note:`<a href="${L.dogma}" target="_blank">📍 Dogma Tap</a> — burgers, BBQ, veggie options.`},
+    {t:'21:30',title:'Gunners → Samo Pivo',badge:'Beer Crawl',note:`<a href="${L.gunners}" target="_blank">Gunners Pub</a> → <a href="${L.samopivo}" target="_blank">Samo Pivo</a>.`},
+    {t:'00:00+',title:'Splav: Ona Moja',badge:'Dance',note:`Folk band + sing-alongs. <a href="${L.onaMoja}" target="_blank">📍 Ona Moja</a>`}
+  ]},
+  {date:'Sat 25/10',label:'Backyard Olympics → Shooting → Skadarlija',items:[
+    {t:'09:00',title:'Breakfast @ Villa',note:`Hydrate. Stretch. Regret nothing. <a href="${L.villa}" target="_blank">📍 Villa</a>`},
+    {t:'10:00–12:00',title:'Backyard Olympics',badge:'Sports',note:'Swimming relay, 3-on-3 hoops, penalties.'},
+    {t:'13:00',title:'Lunch by the river',badge:'Food',note:`<a href="${L.ambar}" target="_blank">Ambar</a> / <a href="${L.frida}" target="_blank">Frida</a>.`},
+    {t:'15:00–17:00',title:'Harborfront hangout / Creative silos',note:`Murals + photos at <a href="${L.silosi}" target="_blank">Silosi Beograd</a>.`},
+    {t:'18:00',title:'Shooting Range',badge:'Bang Bang',note:`Pick a spot: <a href="${L.shootingSearch}" target="_blank">🔎 shooting ranges in Belgrade</a>.`},
+    {t:'20:30 → late',title:'Skadarlija dinner → table party',badge:'Kafana',note:`<a href="${L.triSesira}" target="_blank">Tri Šešira</a> or <a href="${L.dvaJelena}" target="_blank">Dva Jelena</a>.`}
+  ]},
+  {date:'Sun 26/10',label:'Chill, Pack, Depart',items:[
+    {t:'09:30',title:'Breakfast & Check-out',note:`Leave the villa as you wish your liver looked. <a href="${L.villa}" target="_blank">📍 Villa</a>`},
+    {t:'10:30–13:00',title:'Free play: Zemun / Tesla / Coffee crawl',note:`<a href="${L.zemunGardos}" target="_blank">Zemun (Gardoš Tower)</a> · <a href="${L.tesla}" target="_blank">Tesla Museum</a> · <a href="${L.przionica}" target="_blank">Pržionica</a>`},
+    {t:'13:30',title:'Taxi to airport',badge:'Logistics',note:`<a href="${L.airport}" target="_blank">Belgrade Nikola Tesla Airport</a>`},
+    {t:'17:15–19:35',title:'Flight to Copenhagen',note:'Share photos. Delete some. Keep the legends.'}
+  ]}
+];
 
 let active=0;
 const nav=document.getElementById('nav');
@@ -176,9 +213,18 @@ function confetti(){
   toast('Slav squat confetti deployed!');
 }
 
-let hang=false; function toggleHangover(){ hang=!hang; document.body.style.filter=hang?'saturate(.75) brightness(.9)':'none'; toast(hang?'Hangover Mode: soup & burek.':'Party Mode: vodka + hardbass!'); }
+let hang=false; 
+function toggleHangover(){ 
+  hang=!hang; document.body.style.filter=hang?'saturate(.75) brightness(.9)':'none'; 
+  toast(hang?'Hangover Mode: soup & burek.':'Party Mode: vodka + hardbass!'); 
+}
 
-function toast(msg){const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',2000)}
+function toast(msg){
+  const t=document.getElementById('toast'); 
+  t.textContent=msg; 
+  t.style.display='block'; 
+  setTimeout(()=>t.style.display='none',2000)
+}
 </script>
 </body>
 </html>
