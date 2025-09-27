@@ -63,7 +63,7 @@ body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.15), rgb
   <div class="marquee"><span>💀 Slavic hardbass loading… Burek and rakija required for entry 💀</span></div>
 
   <div class="btnbar">
-    <button class="btn alt" onclick="printIt()">🖨 Print / Save PDF</button>
+     <button id="dl" class="btn alt">⬇️ Download Offline Copy</button>
     <button class="btn" onclick="confetti()">🥟 Party Mode</button>
     <button class="btn warn" onclick="toggleHangover()">🤕 Hangover Mode</button>
   </div>
@@ -162,7 +162,24 @@ function renderDay(){
 
 renderNav(); renderDay();
 
-function printIt(){ window.print(); toast('Save as PDF for comrades.'); }
+// Download offline copy
+document.getElementById('dl').onclick = () => {
+  fetch('./index.html')
+    .then(r => r.text())
+    .then(txt => {
+      const blob = new Blob([txt], {type: 'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'belgrade_trip_offline.html';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      toast('Offline copy saved!');
+    });
+};
+
 
 function confetti(){
   const N=120; for(let i=0;i<N;i++){const d=document.createElement('div');
