@@ -47,6 +47,11 @@ body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.15), rgb
 
 *{touch-action:manipulation}
 </style>
+  <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#330000">
+
 </head>
 <body>
 <div id="app">
@@ -75,6 +80,13 @@ body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.15), rgb
 </div>
 
 <script>
+  // Register service worker for PWA offline cache
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(console.error);
+  });
+}
+
 // === tiny pixel icons (inline SVGs) ===
 const ICONS={
   beer:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='#000'/><rect x='5' y='4' width='6' height='9' fill='#ffcc00'/><rect x='4' y='6' width='1' height='6' fill='#ffffff'/><rect x='5' y='3' width='6' height='1' fill='#ffee88'/><rect x='7' y='5' width='2' height='1' fill='#ffd34d'/></svg>`)}`,
