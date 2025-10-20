@@ -9,7 +9,7 @@
 html,body{margin:0;padding:0;background:#000;color:#fff;font-family:"Arial Black", Impact, system-ui, sans-serif;}
 body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.12), rgba(0,0,0,0) 40%);}
 #app{max-width:760px;margin:0 auto;padding:8px 8px 90px;}
-.header{position:sticky;top:0;z-index:99;background:linear-gradient(#330000,#000);border-bottom:3px ridge #ff0000;padding:10px 8px 8px;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.header{position:sticky;top:0;z-index:90;background:linear-gradient(#330000,#000);border-bottom:3px ridge #ff0000;padding:10px 8px 8px;box-shadow:0 8px 24px rgba(0,0,0,.45)}
 .logo h1{font-size:22px;margin:0;text-shadow:0 0 8px #ff2222,0 0 16px #ff4444;letter-spacing:.5px}
 .sub{font-size:12px;color:#ffaaaa;margin-top:2px}
 .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
@@ -22,217 +22,43 @@ body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.12), rgb
 .btn{flex:1;padding:12px 10px;background:#220033;border:3px outset #ff59f8;color:#fff;border-radius:6px;font-weight:900;text-transform:uppercase}
 .btn.alt{background:#003313;border-color:#49ff9a}
 .btn.warn{background:#330000;border-color:#ff4d6d}
-.card{background:#0a0a0a;border:4px ridge #ff0000;border-radius:8px;padding:12px;margin:12px 0;box-shadow:0 0 18px rgba(255,0,0,.25)}
-.card h2{margin:0 0 8px 0;font-size:18px;color:#ffe600;text-shadow:0 0 6px #ffe600}
-.timeline{display:grid;gap:10px}
-.item{background:#050a14;border:3px groove #aa0000;border-radius:8px;padding:10px;position:relative}
+.card{background:#0a0a0a;border:4px ridge #ff0000;border-radius:8px;padding:12px;margin:14px 0;box-shadow:0 0 18px rgba(255,0,0,.25)}
+.card h2{margin:0 0 10px 0;font-size:18px;color:#ffe600;text-shadow:0 0 6px #ffe600}
+.timeline{display:grid;gap:12px}
+.item{background:#050a14;border:3px groove #aa0000;border-radius:8px;padding:12px;position:relative}
 .time{position:absolute;right:8px;top:8px;background:#330000;border:2px solid #ff0000;padding:2px 6px;border-radius:4px;font-size:12px;color:#ffaaaa}
 .title{font-weight:900;margin-right:80px;color:#fff}
-.note{font-size:13px;color:#ffe6e6;margin-top:4px}
+.note{font-size:14px;color:#ffe6e6;margin-top:8px;line-height:1.55}
 a{color:#ffe600;text-decoration:underline}
-.note a.lnk{display:block;margin-top:4px} /* aligned, block links */
-.footer{position:fixed;left:0;right:0;bottom:0;background:#000;border-top:3px ridge #ff0000;padding:8px;color:#ffaaaa;font-size:12px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:#220000;border:3px ridge #ff0000;border-radius:8px;padding:8px 10px;display:none;color:#ffaaaa;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.note a.lnk{display:block;margin-top:6px}
+.note + .note{margin-top:10px}
+ul.note{padding-left:18px;margin:0}
+ul.note li{margin:12px 0 14px;line-height:1.55}
+.footer{position:fixed;left:0;right:0;bottom:0;background:#000;border-top:3px ridge #ff0000;padding:8px;color:#ffaaaa;font-size:12px;z-index:10}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:#220000;border:3px ridge #ff0000;border-radius:8px;padding:8px 10px;display:none;color:#ffaaaa;box-shadow:0 6px 18px rgba(0,0,0,.4);z-index:11}
 *{touch-action:manipulation}
-</style>
-</head>
-<body>
-<div id="app">
-  <div class="header">
-    <div class="logo">
-      <div>
-        <h1>Belgrade Boys Trip</h1>
-        <div class="sub">23–26 oktober · Villa Saga Paradiso · 14 deltagere</div>
-      </div>
-    </div>
-    <div class="tabs" id="tabs"></div>
-  </div>
 
-  <div class="marquee"><span>💀 Slavic hardbass loading… Burek and rakija required for entry 💀</span></div>
-
-  <div class="btnbar">
-    <button id="dl" class="btn alt">Download offline</button>
-    <button id="jumpToday" class="btn warn">Hop til program</button>
-  </div>
-
-  <div id="content"></div>
-
-  <div class="footer">Virker offline · Links virker når du er online</div>
-  <div id="toast" class="toast"></div>
-</div>
-
-<script>
-/* ====== TABS ====== */
-const SECTIONS=["Program","Praktiske råd","Kultura","Mini-ordbog"];
-let activeTab=0;
-const tabsEl=document.getElementById('tabs');
-const contentEl=document.getElementById('content');
-function renderTabs(){
-  tabsEl.innerHTML='';
-  SECTIONS.forEach((name,i)=>{
-    const b=document.createElement('button');
-    b.textContent=name;
-    if(i===activeTab)b.classList.add('active');
-    b.onclick=()=>{activeTab=i;renderTabs();renderContent();window.scrollTo({top:0,behavior:'smooth'})};
-    tabsEl.appendChild(b);
-  });
+/* ---------- Splash: fake gender reveal "video" (CSS/JS animation) ---------- */
+#splash{
+  position:fixed;inset:0;background:#000;z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;
 }
-
-/* ====== PROGRAM (UPDATED) ====== */
-const PLAN=[
-  {
-    date:"Torsdag 23/10",
-    label:"Ankomst og opvarmning",
-    items:[
-      {t:"11:30",title:"Mødes i lufthavnen (København)"},
-      {t:"13:15",title:"Fly til Berlin (U25266)"},
-      {t:"14:15",title:"Lander i Berlin"},
-      {t:"15:40",title:"Fly til Begrad (W64010)"},
-      {t:"17:30",title:"Lander i Beograd"},
-      {t:"18:00",title:"Transfer til Villa Saga Paradiso"},
-      {t:"19:30",title:"Check ind i villaen",note:`<a class="lnk" href="https://maps.app.goo.gl/aBYmCsfGfky1yp8t7" target="_blank">Kort</a>`},
-      {t:"21:00",title:"Supermarked besøg og pizza hygge ved villaen med fadøl og pool",note:`<a class="lnk" href="https://maps.app.goo.gl/vqFFazi2S484eR869" target="_blank">Kort</a>`}
-    ]
-  },
-  {
-    date:"Fredag 24/10",
-    label:"Yugo tour, mikrobryggerier og splav",
-    items:[
-      {t:"09:30",title:"Morgenmad i villaen"},
-      {t:"11:30",title:"Taxa til downtown til Yugo tours",note:`<a class="lnk" href="https://maps.app.goo.gl/AXgxogZ46szpTFFw9" target="_blank">Kort</a>`},
-      {t:"12:00",title:"Yugo Tour til brutalistisk arkitektur, Titos luksustog og andet",note:`<a class="lnk" href="https://yugotour.com" target="_blank">Hjemmeside</a>`},
-      {t:"15:00",title:"Hvis vejret er godt: Mama Shelter rooftop bar og snack. Hvis ikke: burek fra Užina",
-        note:`<a class="lnk" href="https://maps.app.goo.gl/k6AvdqtZ3itPmSQq7" target="_blank">Kort (Mama Shelter)</a>
-              <a class="lnk" href="https://maps.app.goo.gl/FuQiXE44Ki7bodCB9" target="_blank">Kort (Užina)</a>`},
-      {t:"15:30",title:"Gåtur gennem Kalemegdan og Belgrade Fortress. Vi fortsætter gennem centrum (måske forbi en bar) til vi rammer Skadarlija",
-        note:`<a class="lnk" href="https://maps.app.goo.gl/KexxE4sx9Y9xLC61A" target="_blank">Kort</a>`},
-      {t:"20:00",title:"Kafana dinner på Mali Vrabac – der vil være rakija",
-        note:`<a class="lnk" href="https://maps.app.goo.gl/N9nWMTykuMrbRNeT9" target="_blank">Kort</a>`},
-      {t:"23:00",title:"Skadarlija hidden bars party",
-        note:`<a class="lnk" href="https://www.google.com/maps/d/edit?mid=19pQHrPkREOXWZM15kHQFdD6acDqbed8&usp=sharing" target="_blank">Kort</a>`}
-    ]
-  },
-  {
-    date:"Lørdag 25/10",
-    label:"Backyard Olympics, Skydebane, mikrobryggeri pubcrawl",
-    items:[
-      {t:"09:30",title:"Morgenmad i villaen"},
-      {t:"11:00",title:"Backyard Olympics (pool, basket, tennis, fodbold)"},
-      {t:"14:00",title:"Lunch at the house"},
-      {t:"15:00",title:"Transport til shooting range",note:`<a class="lnk" href="https://maps.app.goo.gl/LQW2EddsNBvLUqak7" target="_blank">Kort</a>`},
-      {t:"15:30",title:"Skydning på Belgrade shooting range",note:`<a class="lnk" href="https://belgradeshootingrange.com/wwi-wwii-antique-weapon-shooting/" target="_blank">Hjemmeside</a>`},
-      {t:"17:00",title:"Hurtig gåtur gennem Blok 23 – 1970’ernes socialistiske boligdrøm",note:`<a class="lnk" href="https://maps.app.goo.gl/88Pby85xqtw1YzTe8" target="_blank">Kort</a>`},
-      {t:"18:00",title:"Mikrobryggeri Pubcrawl. Sinnerman → Samo Pivo → Gunners → Dogma",
-        note:`<a class="lnk" href="https://maps.app.goo.gl/vFjRGhiKYks1jdJLA" target="_blank">Rutekort</a>`},
-      {t:"23:00",title:"Splav (flodklub) Baraka",note:`<a class="lnk" href="https://maps.app.goo.gl/FUcZnzwqJUV2zoPb6" target="_blank">Kort</a>`}
-    ]
-  },
-  {
-    date:"Søndag 26/10",
-    label:"Afslapning og Hjemrejse",
-    items:[
-      {t:"09:30",title:"Morgenmad i villaen"},
-      {t:"10:30",title:"Check-ud"},
-      {t:"11:00",title:"Kafeterija Magazin 1907 – afslapning, kaffe, juice, shopping eller en tur rundt i byen",
-        note:`<a class="lnk" href="https://maps.app.goo.gl/8jeZ63ek6JmoQsjF7" target="_blank">Kort</a>`},
-      {t:"14:30",title:"Taxa til lufthavnen"},
-      {t:"15:00",title:"Check-in"},
-      {t:"17:15",title:"Fly til København (JU 372)"},
-      {t:"19:35",title:"Lander i København"}
-    ]
-  }
-];
-
-/* ====== PRAKTISKE RÅD ====== */
-const CHEATSHEET_HTML=`
-<div class="card">
-<h2>Praktiske råd</h2>
-<div class="note">
-Download <a class="lnk" href="https://www.airalo.com" target="_blank">airalo.com</a> og køb et eSIM hvis du ikke har world data. Koster omkring 10 USD alt efter data pakke.
-</div>
-<ul class="note">
-<li>Medbring altid ID, når du går ud. Politiet laver sjældent tjek, men det kan ske.</li>
-<li>Kontanter, kontanter, kontanter (valuta: RSD, ikke EUR). Mange barer tager kort, men taxaer, kiosker og små kafanas gør ofte ikke. Brug kun hæveautomater, der er ved en bank.</li>
-<li>Brug Bolt, CarGo eller Yandex Go apps til transport – de er pålidelige og billige. Hvis du prajer en taxa på gaden, aftal prisen på forhånd. Normale ture i byen koster 600–1200 RSD (ca. 5–10 €). Turen fra byen til villaen koster typisk 2500–3000 RSD.</li>
-<li>Drikkepenge: omkring 10 %, eller rund op til nærmeste hundrede RSD.</li>
-<li>Efterlad ingen mand alene. Gå ikke alene rundt på mørke områder sent om aftenen.</li>
-<li>Diskutér aldrig med dørmænd.</li>
-<li>Serbere er venlige, stolte og direkte. Et smil og et “Hvala” (tak) er guld.</li>
-<li>Hvis et band spiller ved vores bord, forventer de drikkepenge.</li>
-<li>Spis før du drikker rakija. Det er ikke et forslag – det er en regel.</li>
-</ul>
-</div>
-<div class="card">
-<h2>Kort forklaring</h2>
-<div class="note"><strong>Splav:</strong> En flydende natklub eller bar på Donau eller Sava. Åbner sent og lukker først, når solen står op. Her danser man, drikker og mister tidsfornemmelsen.</div>
-<div class="note"><strong>Kafana:</strong> En traditionel serbisk taverne med lokal mad, rakija og levende musik. Her spiser man, drikker og ender ofte med at synge med husorkestret.</div>
-</div>`;
-
-/* ====== KULTURA ====== */
-const KULTURA_HTML=`
-<div class="card">
-<h2>Hvem var Tito?</h2>
-<div class="note">Josip Broz Tito (1892–1980) var den legendariske leder, der samlede og styrede Jugoslavien efter 2. Verdenskrig. Han var både partisanhelt, diktator og karismatisk verdensfigur – en mand, der kunne få både Øst og Vest til at smile til ham på samme tid.</div>
-<div class="note">Tito brød med Stalin i 1948 og nægtede at lade Moskva bestemme. I stedet skabte han sit eget system – “jugoslavisk socialisme” – hvor folk kunne rejse, handle med Vesten og stadig kalde sig kommunister.</div>
-<div class="note">Han holdt et broget land af seks republikker sammen med en blanding af hård kontrol, politisk balance og personlig kult.</div>
-<div class="note">Da han døde i 1980, gik Jugoslavien langsomt i opløsning, og få år senere endte regionen i de blodige krige i 1990’erne.</div>
-</div>
-<div class="card">
-<h2>Fun facts om Tito</h2>
-<ul class="note">
-<li>Det Blå Tog (Blue Train) var Titos private luksustog – med sovevogne, konferencekupé og egen bar. Det transporterede ham og hans gæster – herunder Churchill, Castro og Elizabeth II – gennem hele Jugoslavien. Toget eksisterer stadig og står som et rullende museum i Beograd.</li>
-<li>Han ejede over 30 uniformer designet til forskellige lejligheder – fra militærparader til gallamiddage.</li>
-<li>Hans private ø, Brioni, fungerede som et ferieparadis med egen zoo, filmstudie og luksusvillaer til statsledere.</li>
-<li>Han var gift tre gange, men det var magten, der var hans sande livspartner.</li>
-</ul>
-</div>`;
-
-/* ====== ORDBOG ====== */
-const ORDBOG_HTML=`
-<div class="card"><h2>Mini-ordbog</h2>
-<ul class="note">
-<li>Skål: <strong>Živeli</strong></li>
-<li>Tak: <strong>Hvala</strong></li>
-<li>Hej: <strong>Zdravo</strong></li>
-</ul>
-</div>`;
-
-/* ====== RENDER ====== */
-function renderProgram(){
-  contentEl.innerHTML='';
-  PLAN.forEach(day=>{
-    const card=document.createElement('div');card.className='card';
-    card.innerHTML=`<h2>${day.date} · <span style="color:#ffaaaa">${day.label}</span></h2>`;
-    const tl=document.createElement('div');tl.className='timeline';
-    day.items.forEach(it=>{
-      const el=document.createElement('div');el.className='item';
-      el.innerHTML=`
-        <div class="time">${it.t}</div>
-        <div class="title">${it.title}</div>
-        ${it.note?`<div class="note">${it.note}</div>`:''}`;
-      tl.appendChild(el);
-    });
-    card.appendChild(tl);
-    contentEl.appendChild(card);
-  });
-  const villa=document.createElement('div');villa.className='card';
-  villa.innerHTML=`<h2>Base · Villa Saga Paradiso</h2>
-  <div class="note">Adresse: Marije Mirčetić 8, Beograd
-    <a class="lnk" href="https://maps.app.goo.gl/aBYmCsfGfky1yp8t7" target="_blank">Kort</a>
-  </div>`;
-  contentEl.appendChild(villa);
+#stage{
+  position:relative;width:min(92vw,720px);height:min(56vw,420px);
+  background:#000;border:4px ridge #ff0000;border-radius:10px;overflow:hidden;
+  box-shadow:0 0 30px rgba(255,0,0,.25);
 }
-function renderCheats(){contentEl.innerHTML=CHEATSHEET_HTML;}
-function renderKultura(){contentEl.innerHTML=KULTURA_HTML;}
-function renderOrdbog(){contentEl.innerHTML=ORDBOG_HTML;}
-function renderContent(){if(activeTab===0)renderProgram();if(activeTab===1)renderCheats();if(activeTab===2)renderKultura();if(activeTab===3)renderOrdbog();}
-function init(){renderTabs();renderContent();}
-init();
-
-/* ====== UX ====== */
-document.getElementById('dl').onclick=()=>{fetch('./index.html').then(r=>r.text()).then(txt=>{const blob=new Blob([txt],{type:'text/html'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='belgrade_boys_trip.html';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);toast('Offline kopi gemt');});};
-document.getElementById('jumpToday').onclick=()=>{activeTab=0;renderTabs();renderContent();const first=document.querySelector('.card');if(first)first.scrollIntoView({behavior:'smooth'});};
-function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>t.style.display='none',2000);}
-</script>
-</body>
-</html>
+/* gradient “smoke” */
+.smoke{position:absolute;inset:-10%;background:conic-gradient(from 0deg,#111 0%,#330000 25%,#111 50%,#220022 75%,#111 100%);filter:blur(18px);opacity:.8;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* caption lines */
+.cap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-weight:900;text-align:center;opacity:0}
+.cap h3{margin:0;font-size:clamp(18px,5vw,28px);letter-spacing:.5px}
+.cap p{margin:8px 0 0;font-size:clamp(14px,3.5vw,18px);color:#ffcccc}
+.cap.step1{animation:show1 1.2s ease forwards .4s}
+.cap.step2{animation:show1 1.2s ease forwards 2.2s}
+.cap.step3{animation:show1 1.2s ease forwards 4.0s}
+@keyframes show1{to{opacity:1;transform:translate(-50%,-50%) scale(1.0)}}
+.cap{transform:translate(-50%,-50%) scale(.98)}
+/* reveal banner */
+#reveal{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,
