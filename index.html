@@ -3,161 +3,44 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Belgrade Boys Trip · Østblok Luksus</title>
-<meta name="description" content="Belgrade Boys Trip – Program, praktiske råd, kultur og mini-ordbog i én mobilvenlig side (offline-klar)." />
+<title>Belgrade Boys Trip · Retro 90s Slav</title>
+<meta name="description" content="Belgrade Boys Trip — program, praktiske råd, kultur og mini-ordbog. Offline-klar, mobilvenlig, retro 90'er slav-stil." />
 <style>
-/* === ØSTBLOK LUKSUS THEME (black/burgundy/gold), mobile-first === */
-:root{
-  --bg: #0b0b0d;
-  --bg-soft: #121216;
-  --ink: #eee7d8;            /* varm off-white */
-  --muted: #c8bfa8;
-  --burgundy: #3b0f16;       /* dyb bordeaux */
-  --burgundy-2:#250a0f;
-  --gold: #c9a64a;           /* matte guld */
-  --gold-hi:#efd27a;         /* highlight guld */
-  --gold-lo:#8a6c2b;
-  --accent:#9b1f2b;          /* rød accent */
-  --radius: 12px;
-  --shadow: 0 6px 24px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.03);
-  --ring: 0 0 0 1px rgba(201,166,74,.25), 0 0 0 3px rgba(201,166,74,.08);
-}
+/* === RETRO 90s SLAV THEME (rød/sort), mobile-first === */
+html,body{margin:0;padding:0;background:#000;color:#fff;font-family:"Arial Black", Impact, system-ui, sans-serif;}
+body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.12), rgba(0,0,0,0) 40%);}
 
-html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
-  font-family: "Georgia", "Times New Roman", serif; -webkit-font-smoothing:antialiased}
-body{
-  background-image:
-    radial-gradient(1200px 600px at 50% -10%, rgba(201,166,74,.08), rgba(0,0,0,0)),
-    radial-gradient(1200px 600px at 50% 110%, rgba(58,16,22,.25), rgba(0,0,0,0));
-}
+#app{max-width:760px;margin:0 auto;padding:8px 8px 90px;}
+.header{position:sticky;top:0;z-index:99;background:linear-gradient(#330000,#000);border-bottom:3px ridge #ff0000;padding:10px 8px 8px;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.logo{display:flex;align-items:center;gap:8px}
+.logo h1{font-size:22px;margin:0; text-shadow:0 0 8px #ff2222, 0 0 16px #ff4444; letter-spacing:.5px}
+.sub{font-size:12px;color:#ffaaaa;margin-top:2px}
 
-#app{max-width:780px;margin:0 auto;padding:10px 10px 96px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.tabs button{flex:1;min-width:46%;padding:10px 8px;background:#1a0000;border:3px outset #ff2222;color:#fff;border-radius:6px;font-weight:800;text-shadow:0 0 6px #ff3333;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.tabs button.active{background:#ffe600;border-color:#ff0000;color:#220000;text-shadow:none}
 
-/* — Header / logo — */
-.header{
-  position:sticky;top:0;z-index:50;
-  background:
-    linear-gradient(180deg, #121218 0%, #0b0b0d 100%),
-    radial-gradient(1200px 300px at 50% -40%, rgba(201,166,74,.08), transparent);
-  border-bottom: 1px solid rgba(201,166,74,.35);
-  box-shadow: 0 10px 30px rgba(0,0,0,.4);
-  padding:12px 10px 10px;
-}
-.logo{display:flex;align-items:center;gap:10px}
-.logo h1{
-  margin:0; font-weight:700; letter-spacing:.6px;
-  font-size:22px; color:var(--gold-hi);
-  text-shadow: 0 0 0 rgba(0,0,0,0), 0 0 18px rgba(201,166,74,.18);
-}
-.sub{font-size:12px;color:var(--muted);margin-top:2px}
-
-/* — Top tabs — */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-.tabs button{
-  flex:1; min-width:46%;
-  background: linear-gradient(180deg, var(--burgundy), var(--burgundy-2));
-  color:var(--ink); border:1px solid rgba(201,166,74,.35);
-  border-radius: var(--radius); padding:10px 10px; font-weight:700;
-  box-shadow: var(--shadow);
-}
-.tabs button.active{
-  background: linear-gradient(180deg, #1b1b21, #0e0e12);
-  color:var(--gold-hi);
-  border:1px solid var(--gold);
-  box-shadow: 0 0 0 1px rgba(201,166,74,.25), 0 8px 30px rgba(201,166,74,.12);
-}
-
-/* — Dekorativ bånd (marquee) — */
-.marquee{
-  margin:10px 0 8px; position:relative; overflow:hidden; white-space:nowrap;
-  background: linear-gradient(180deg, #121218, #0e0e12);
-  border:1px solid rgba(201,166,74,.25);
-  border-left:0;border-right:0;
-}
-.marquee:before,.marquee:after{
-  content:""; position:absolute; top:0; bottom:0; width:18px;
-  background:linear-gradient(90deg, rgba(201,166,74,.18), rgba(0,0,0,0));
-}
-.marquee:after{right:0; transform:rotate(180deg)}
-.marquee span{
-  display:inline-block; padding:8px 0; color:var(--muted);
-  animation:scroll 20s linear infinite;
-  letter-spacing:.5px;
-}
+.marquee{margin:10px 0;background:#220000;border-top:3px ridge #ff0000;border-bottom:3px ridge #ff0000;overflow:hidden;white-space:nowrap}
+.marquee span{display:inline-block;padding:8px;color:#ffaaaa;animation:scroll 18s linear infinite;letter-spacing:.3px}
 @keyframes scroll{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 
-/* — Primære knapper — */
-.btnbar{display:flex;gap:10px;margin:10px 0}
-.btn{
-  flex:1;padding:12px 10px;border-radius: var(--radius);
-  background:linear-gradient(180deg,#1b1b21,#0f0f13);
-  color:var(--ink); font-weight:800; text-transform:uppercase; letter-spacing:.5px;
-  border:1px solid rgba(201,166,74,.35); box-shadow: var(--shadow);
-}
-.btn.alt{
-  background: linear-gradient(180deg, #2a2014, #19130c);
-  border-color: rgba(239,210,122,.45);
-  color: var(--gold-hi);
-}
-.btn.warn{
-  background: linear-gradient(180deg, #3b0f16, #230a0f);
-  border-color: rgba(155,31,43,.65);
-}
+.btnbar{display:flex;gap:8px;margin:10px 0}
+.btn{flex:1;padding:12px 10px;background:#220033;border:3px outset #ff59f8;color:#fff;border-radius:6px;font-weight:900;text-transform:uppercase}
+.btn.alt{background:#003313;border-color:#49ff9a}
+.btn.warn{background:#330000;border-color:#ff4d6d}
 
-/* — Cards / tidslinje — */
-.card{
-  background: linear-gradient(180deg, #0f0f13, #0b0b0d);
-  border:1px solid rgba(201,166,74,.28);
-  border-radius: var(--radius);
-  padding:14px; margin:12px 0; box-shadow: var(--shadow);
-}
-.card h2{
-  margin:0 0 8px; font-size:18px; font-weight:800;
-  color: var(--gold-hi);
-  text-shadow: 0 0 18px rgba(201,166,74,.12);
-}
-.timeline{display:grid; gap:10px}
-.item{
-  background: linear-gradient(180deg, #121218, #0f0f13);
-  border:1px solid rgba(201,166,74,.22);
-  border-radius: 10px; padding:12px 12px 12px 12px; position:relative;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
-}
-.time{
-  position:absolute; right:10px; top:10px;
-  font-size:12px; color: var(--muted);
-  background:linear-gradient(180deg,#1b1b21,#121218);
-  border:1px solid rgba(201,166,74,.25);
-  border-radius:8px; padding:2px 8px;
-}
-.title{font-weight:800;margin-right:80px;color:var(--ink)}
-.note{font-size:13px;color:var(--muted); margin-top:4px}
-.badge{
-  display:inline-block;margin-left:6px; font-size:11px; color:#1a1205;
-  background: linear-gradient(180deg, var(--gold-hi), var(--gold));
-  border:1px solid var(--gold-lo); border-radius: 999px; padding:2px 8px;
-}
+.card{background:#0a0a0a;border:4px ridge #ff0000;border-radius:8px;padding:12px;margin:12px 0;box-shadow:0 0 18px rgba(255,0,0,.25)}
+.card h2{margin:0 0 8px 0;font-size:18px;color:#ffe600;text-shadow:0 0 6px #ffe600}
+.timeline{display:grid;gap:10px}
+.item{background:#050a14;border:3px groove #aa0000;border-radius:8px;padding:10px;position:relative}
+.time{position:absolute;right:8px;top:8px;background:#330000;border:2px solid #ff0000;padding:2px 6px;border-radius:4px;font-size:12px;color:#ffaaaa}
+.title{font-weight:900;margin-right:80px;color:#fff}
+.note{font-size:13px;color:#ffe6e6;margin-top:4px}
+.badge{display:inline-block;margin-left:6px;background:#660000; color:#fff; padding:2px 6px;border:2px outset #ff0000;border-radius:6px;font-size:11px}
 
-/* – links – */
-a{color: var(--gold-hi); text-decoration: underline dotted}
-a:hover{color:var(--gold);}
-
-/* — Footer & toast — */
-.footer{
-  position:fixed;left:0;right:0;bottom:0;
-  background: linear-gradient(180deg, #0b0b0d, #0b0b0d);
-  border-top:1px solid rgba(201,166,74,.28);
-  padding:8px 10px; color:var(--muted); font-size:12px
-}
-.toast{
-  position:fixed;left:50%;transform:translateX(-50%);bottom:96px;
-  background: linear-gradient(180deg, #121218, #0e0e12);
-  border:1px solid rgba(201,166,74,.35);
-  border-radius: 10px; padding:8px 10px; display:none; color:var(--ink);
-  box-shadow: var(--shadow);
-}
-
-/* — Touch — */
+a{color:#ffe600;text-decoration:underline}
+.footer{position:fixed;left:0;right:0;bottom:0;background:#000;border-top:3px ridge #ff0000;padding:8px;color:#ffaaaa;font-size:12px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:#220000;border:3px ridge #ff0000;border-radius:8px;padding:8px 10px;display:none;color:#ffaaaa;box-shadow:0 6px 18px rgba(0,0,0,.4)}
 *{touch-action:manipulation}
 </style>
 </head>
@@ -166,33 +49,46 @@ a:hover{color:var(--gold);}
   <div class="header">
     <div class="logo">
       <div>
-        <h1>Belgrade Boys Trip · Gold Edition</h1>
-        <div class="sub">23–26 okt · Villa Saga Paradiso · 14 deltagere</div>
+        <h1>Belgrade Boys Trip</h1>
+        <div class="sub">23–26 oktober · Villa Saga Paradiso · 14 deltagere</div>
       </div>
     </div>
     <div class="tabs" id="tabs"></div>
   </div>
 
-  <div class="marquee"><span>Belgrade Boys Trip – Østblok-luksus, stærk kaffe, blød guldglød og en smule kaos.</span></div>
+  <div class="marquee"><span>Hardbass loading… Burek og rakija anbefales. Retro 90’er Slav-mode aktiveret.</span></div>
 
   <div class="btnbar">
     <button id="dl" class="btn alt">Download offline</button>
-    <button class="btn" id="jumpToday">Hop til i dag</button>
+    <button id="jumpToday" class="btn warn">Hop til program</button>
   </div>
 
   <div id="content"></div>
 
-  <div class="footer">Virker offline · Links virker når du er online · Design: Østblok Luksus</div>
+  <div class="footer">Virker offline · Links vågner når du er online · Retro 90s Slav</div>
   <div id="toast" class="toast"></div>
 </div>
 
 <script>
-/* ==== DATA ==== */
-
-// Sektioner (tabs)
+/* ====== TABS ====== */
 const SECTIONS = ["Program","Praktiske råd","Kultura","Mini-ordbog"];
+let activeTab = 0;
 
-// Program – fra din seneste besked (DK + links)
+const tabsEl = document.getElementById('tabs');
+const contentEl = document.getElementById('content');
+
+function renderTabs(){
+  tabsEl.innerHTML = '';
+  SECTIONS.forEach((name,i)=>{
+    const b=document.createElement('button');
+    b.textContent=name;
+    if(i===activeTab) b.classList.add('active');
+    b.onclick=()=>{activeTab=i; renderTabs(); renderContent(); window.scrollTo({top:0,behavior:'smooth'})};
+    tabsEl.appendChild(b);
+  });
+}
+
+/* ====== DATA: PROGRAM ====== */
 const PLAN = [
   {
     date: "Torsdag 23/10",
@@ -205,7 +101,7 @@ const PLAN = [
       {t:"17:30", title:"Lander i Beograd"},
       {t:"18:00", title:"Transfer til Villa Saga Paradiso"},
       {t:"19:30", title:"Check ind i villaen", note:`<a href="https://maps.app.goo.gl/aBYmCsfGfky1yp8t7" target="_blank">Villa kort</a>`},
-      {t:"21:00", title:"Supermarked og pizza, hygge ved villaen med fadøl og pool", note:`<a href="https://maps.app.goo.gl/vqFFazi2S484eR869" target="_blank">Supermarked kort</a>`}
+      {t:"21:00", title:"Supermarked og pizza – hygge ved villaen med fadøl og pool", note:`<a href="https://maps.app.goo.gl/vqFFazi2S484eR869" target="_blank">Supermarked</a>`}
     ]
   },
   {
@@ -229,7 +125,7 @@ const PLAN = [
       {t:"11:00", title:"Backyard Olympics (pool, basket, tennis, fodbold)"},
       {t:"14:00", title:"Taxa til centrum, frokost som take-away"},
       {t:"15:30", title:"Skydning (aktivitet)"},
-      {t:"18:00", title:"Evt. hangout: havnefront/kreative siloer (Dorćol/Savamala)"},
+      {t:"18:00", title:"Evt. hangout ved havnefronten / kreative siloer (Dorćol/Savamala)"},
       {t:"20:00", title:"Skadarlija-bydel med middag og fest (dans på bordene opfordres)"}
     ]
   },
@@ -248,35 +144,35 @@ const PLAN = [
   }
 ];
 
-// Praktiske råd (DK)
+/* ====== CHEAT SHEET ====== */
 const CHEATSHEET_HTML = `
 <div class="card">
   <h2>Praktiske råd</h2>
   <div class="note">
-    Download <a href="https://www.airalo.com" target="_blank">Airalo</a> og køb eSIM hvis du ikke har world data (ca. 10 USD afhængigt af datapakke).
+    Download <a href="https://www.airalo.com" target="_blank">Airalo</a> og køb eSIM hvis du ikke har world data (omkring 10 USD afhængigt af datapakke).
   </div>
   <ul class="note">
-    <li>Medbring altid ID når du går ud. Politiet laver sjældent tjek, men det kan ske.</li>
+    <li>Medbring altid ID, når du går ud. Politiet laver sjældent tjek, men det kan ske.</li>
     <li>Kontanter: RSD, ikke EUR. Mange barer tager kort, men taxaer, kiosker og små kafanas gør ofte ikke.</li>
-    <li>Brug kun hæveautomater ved banker, undgå fritstående gade-ATM.</li>
-    <li>Transport: Bolt, CarGo eller Yandex Go er pålidelige og billige. Hvis du prajer en taxa, aftal prisen på forhånd.</li>
+    <li>Brug kun hæveautomater ved banker. Undgå fritstående gade-ATM.</li>
+    <li>Transport: Bolt, CarGo eller Yandex Go. Hvis du prajer en taxa på gaden, aftal prisen på forhånd.</li>
     <li>Prispejlemærker: Byture 600–1200 RSD (ca. 5–10 €). Byen → villa: typisk 2500–3000 RSD.</li>
-    <li>Drikkepenge ~10% eller rund op til nærmeste 100 RSD.</li>
-    <li>Efterlad ingen mand alene. Gå ikke alene rundt i mørke områder sent.</li>
+    <li>Drikkepenge: ca. 10 % eller rund op til nærmeste 100 RSD.</li>
+    <li>Ingen mand efterlades. Gå ikke alene rundt i mørke områder sent.</li>
     <li>Diskutér ikke med dørmænd.</li>
-    <li>Serbere er venlige, stolte og direkte. Et smil og “Hvala” gør en forskel.</li>
+    <li>Serbere er venlige, stolte og direkte. Et smil og “Hvala” går langt.</li>
     <li>Hvis et band spiller ved bordet, forventer de drikkepenge.</li>
     <li>Spis før du drikker rakija. Det er en regel.</li>
   </ul>
-  <div class="card">
-    <h2>Kort forklaring</h2>
-    <div class="note"><strong>Splav:</strong> Flydende natklub/bar på Donau eller Sava. Åbner sent, lukker ved solopgang. Halv båd, halv kaos.</div>
-    <div class="note"><strong>Kafana:</strong> Traditionel serbisk taverne med lokal mad, rakija og levende musik. Man starter med mad og ender ofte med at synge med husorkestret.</div>
-  </div>
+</div>
+<div class="card">
+  <h2>Kort forklaring</h2>
+  <div class="note"><strong>Splav:</strong> Flydende natklub/bar på Donau eller Sava. Åbner sent og lukker ved solopgang. Halv båd, halv kaos.</div>
+  <div class="note"><strong>Kafana:</strong> Traditionel serbisk taverne med lokal mad, rakija og levende musik. Man starter med mad og ender ofte med at synge med husorkestret.</div>
 </div>
 `;
 
-// Kultura (Tito)
+/* ====== KULTURA (TITO) ====== */
 const KULTURA_HTML = `
 <div class="card">
   <h2>Hvem var Tito?</h2>
@@ -301,7 +197,7 @@ const KULTURA_HTML = `
 </div>
 `;
 
-// Mini-ordbog
+/* ====== MINI-ORDBOG ====== */
 const ORDBOG_HTML = `
 <div class="card"><h2>Mini-ordbog</h2>
   <ul class="note">
@@ -312,44 +208,26 @@ const ORDBOG_HTML = `
 </div>
 `;
 
-/* ==== RENDER ==== */
-
-let activeTab = 0; // 0=Program
-
-const tabsEl = document.getElementById('tabs');
-const contentEl = document.getElementById('content');
-
-function renderTabs(){
-  tabsEl.innerHTML = '';
-  SECTIONS.forEach((name,i)=>{
-    const b=document.createElement('button');
-    b.textContent=name;
-    if(i===activeTab) b.classList.add('active');
-    b.onclick=()=>{activeTab=i; renderTabs(); renderContent(); window.scrollTo({top:0,behavior:'smooth'})};
-    tabsEl.appendChild(b);
-  });
-}
-
+/* ====== RENDER ====== */
 function renderProgram(){
   contentEl.innerHTML='';
   PLAN.forEach(day=>{
     const card=document.createElement('div'); card.className='card';
-    card.innerHTML = `<h2>${day.date} · <span style="color:var(--muted)">${day.label}</span></h2>`;
+    card.innerHTML = `<h2>${day.date} · <span style="color:#ffaaaa">${day.label}</span></h2>`;
     const tl=document.createElement('div'); tl.className='timeline';
     day.items.forEach(it=>{
       const el=document.createElement('div'); el.className='item';
       el.innerHTML = `
         <div class="time">${it.t}</div>
         <div class="title">${it.title}</div>
-        <div class="note">${it.note||''}</div>`;
+        <div class="note">${it.note || ''}</div>`;
       tl.appendChild(el);
     });
     card.appendChild(tl);
     contentEl.appendChild(card);
   });
   // Villa info card
-  const villa = document.createElement('div');
-  villa.className='card';
+  const villa=document.createElement('div'); villa.className='card';
   villa.innerHTML = `<h2>Base · Villa Saga Paradiso</h2>
   <div class="note">Adresse: Marije Mirčetić 8, Beograd · <a href="https://maps.app.goo.gl/aBYmCsfGfky1yp8t7" target="_blank">Kortlink</a></div>`;
   contentEl.appendChild(villa);
@@ -366,11 +244,13 @@ function renderContent(){
   if(activeTab===3) renderOrdbog();
 }
 
-renderTabs();
-renderContent();
+function init(){
+  renderTabs();
+  renderContent();
+}
+init();
 
-/* ==== UX helpers ==== */
-
+/* ====== UX ====== */
 document.getElementById('dl').onclick = () => {
   fetch('./index.html')
     .then(r => r.text())
@@ -379,7 +259,7 @@ document.getElementById('dl').onclick = () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'belgrade_boys_trip_gold.html';
+      a.download = 'belgrade_boys_trip_retro.html';
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -390,17 +270,10 @@ document.getElementById('dl').onclick = () => {
 
 document.getElementById('jumpToday').onclick = ()=>{
   activeTab = 0; renderTabs(); renderContent();
-  // scroll til første kort i program
-  const first = document.querySelector('.card');
-  if(first) first.scrollIntoView({behavior:'smooth', block:'start'});
+  const first = document.querySelector('.card'); if(first) first.scrollIntoView({behavior:'smooth'});
 };
 
-function toast(msg){
-  const t=document.getElementById('toast'); 
-  t.textContent=msg; 
-  t.style.display='block'; 
-  setTimeout(()=>t.style.display='none',2000)
-}
+function toast(msg){const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block'; setTimeout(()=>t.style.display='none',2000)}
 </script>
 </body>
 </html>
