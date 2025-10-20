@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Belgrade Boys Trip · Retro 90s Slav</title>
-<meta name="description" content="Belgrade Boys Trip — program, praktiske råd, kultur og mini-ordbog. Offline-klar, mobilvenlig, retro 90'er slav-stil." />
+<title>Belgrade Boys Trip</title>
+<meta name="description" content="Belgrade Boys Trip — program, praktiske råd, kultur og mini-ordbog. Offline-klar, mobilvenlig." />
 <style>
-/* === RETRO 90s SLAV THEME (rød/sort), mobile-first === */
+/* === 90s SLAV THEME (rød/sort), mobile-first === */
 html,body{margin:0;padding:0;background:#000;color:#fff;font-family:"Arial Black", Impact, system-ui, sans-serif;}
 body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.12), rgba(0,0,0,0) 40%);}
 
@@ -41,6 +41,11 @@ body{background-image: radial-gradient(circle at 50% 10%, rgba(255,0,0,.12), rgb
 a{color:#ffe600;text-decoration:underline}
 .footer{position:fixed;left:0;right:0;bottom:0;background:#000;border-top:3px ridge #ff0000;padding:8px;color:#ffaaaa;font-size:12px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;background:#220000;border:3px ridge #ff0000;border-radius:8px;padding:8px 10px;display:none;color:#ffaaaa;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+
+details{margin-top:8px;background:#0b0f1a;border:2px solid #7a0000;border-radius:8px;padding:8px}
+details summary{cursor:pointer;font-weight:800;list-style:none}
+details summary::-webkit-details-marker{display:none}
+.thumb{display:block;width:120px;height:auto;border:2px solid #ff0000;border-radius:6px;margin:6px 0}
 *{touch-action:manipulation}
 </style>
 </head>
@@ -56,7 +61,8 @@ a{color:#ffe600;text-decoration:underline}
     <div class="tabs" id="tabs"></div>
   </div>
 
-  <div class="marquee"><span>Hardbass loading… Burek og rakija anbefales. Retro 90’er Slav-mode aktiveret.</span></div>
+  <!-- #3 streamer opdateret til dansk uden retro-tekst -->
+  <div class="marquee"><span>Husk ID, kontanter (RSD), gode sko og godt humør. Sig “Živeli!” når glassene løftes.</span></div>
 
   <div class="btnbar">
     <button id="dl" class="btn alt">Download offline</button>
@@ -65,11 +71,39 @@ a{color:#ffe600;text-decoration:underline}
 
   <div id="content"></div>
 
-  <div class="footer">Virker offline · Links vågner når du er online · Retro 90s Slav</div>
+  <div class="footer">Virker offline · Links virker når du er online</div>
   <div id="toast" class="toast"></div>
 </div>
 
 <script>
+/* ====== IKONER (små inline-SVG-billeder) ====== */
+const ICONS={
+  plane:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='#0b0f1a'/><path d='M6 36l50-12-16 12 16 8L6 36z' fill='#9ad7ff'/></svg>`)}`,
+  taxi:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='#0b0f1a'/><rect x='8' y='28' width='48' height='18' fill='#ffe600'/><rect x='22' y='22' width='20' height='6' fill='#222'/><circle cx='20' cy='48' r='4' fill='#333'/><circle cx='44' cy='48' r='4' fill='#333'/></svg>`)}`,
+  villa:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='#0b0f1a'/><polygon points='8,28 32,12 56,28 56,52 8,52' fill='#ff5959'/><rect x='24' y='36' width='16' height='16' fill='#111'/></svg>`)}`,
+  beer:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='#0b0f1a'/><rect x='22' y='16' width='20' height='32' fill='#ffcc00'/><rect x='18' y='20' width='4' height='24' fill='#fff'/></svg>`)}`,
+  walk:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='#0b0f1a'/><circle cx='32' cy='16' r='6' fill='#ffe600'/><rect x='28' y='24' width='8' height='20' fill='#ffe600'/><rect x='20' y='28' width='8' height='8' fill='#ffe600'/><rect x='36' y='40' width='8' height='8' fill='#ffe600'/></svg>`)}`,
+  splav:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='#0b0f1a'/><rect x='10' y='24' width='44' height='18' fill='#ff4081'/><rect x='8' y='42' width='48' height='6' fill='#333'/><path d='M8 50c6 4 12 4 18 0 6 4 12 4 18 0 6 4 12 4 18 0' stroke='#3aa' fill='none'/></svg>`)}`,
+  yugo:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='#0b0f1a'/><rect x='10' y='30' width='44' height='10' fill='#9cf'/><rect x='16' y='26' width='20' height='6' fill='#69c'/><circle cx='20' cy='44' r='4' fill='#333'/><circle cx='44' cy='44' r='4' fill='#333'/></svg>`)}`,
+  shoot:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='#0b0f1a'/><rect x='10' y='30' width='44' height='6' fill='#804000'/><rect x='36' y='26' width='4' height='14' fill='#666'/><rect x='48' y='26' width='4' height='10' fill='#888'/></svg>`)}`,
+  coffee:`data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='#0b0f1a'/><rect x='18' y='24' width='24' height='18' fill='#fff'/><rect x='42' y='26' width='8' height='10' fill='#ccc'/><rect x='20' y='40' width='20' height='4' fill='#bbb'/></svg>`)}`,
+};
+
+/* Returnerer ikon baseret på titel/aktivitet */
+function iconFor(it){
+  const t=(it.title||'').toLowerCase();
+  if(t.includes('fly')) return ICONS.plane;
+  if(t.includes('transfer')||t.includes('taxa')) return ICONS.taxi;
+  if(t.includes('villa')||t.includes('check ind')) return ICONS.villa;
+  if(t.includes('yugo')) return ICONS.yugo;
+  if(t.includes('pubcrawl')||t.includes('dogma')||t.includes('gunners')||t.includes('pivo')||t.includes('beer')) return ICONS.beer;
+  if(t.includes('gåtur')) return ICONS.walk;
+  if(t.includes('splav')||t.includes('ona moja')) return ICONS.splav;
+  if(t.includes('skyd')) return ICONS.shoot;
+  if(t.includes('kafeterija')||t.includes('kaffe')) return ICONS.coffee;
+  return null;
+}
+
 /* ====== TABS ====== */
 const SECTIONS = ["Program","Praktiske råd","Kultura","Mini-ordbog"];
 let activeTab = 0;
@@ -145,13 +179,12 @@ const PLAN = [
 ];
 
 /* ====== CHEAT SHEET ====== */
+/* #1 Airalo-linjen gjort til et punkt i listen */
 const CHEATSHEET_HTML = `
 <div class="card">
   <h2>Praktiske råd</h2>
-  <div class="note">
-    Download <a href="https://www.airalo.com" target="_blank">Airalo</a> og køb eSIM hvis du ikke har world data (omkring 10 USD afhængigt af datapakke).
-  </div>
   <ul class="note">
+    <li>Download <a href="https://www.airalo.com" target="_blank">Airalo</a> og køb eSIM hvis du ikke har world data (omkring 10 USD afhængigt af datapakke).</li>
     <li>Medbring altid ID, når du går ud. Politiet laver sjældent tjek, men det kan ske.</li>
     <li>Kontanter: RSD, ikke EUR. Mange barer tager kort, men taxaer, kiosker og små kafanas gør ofte ikke.</li>
     <li>Brug kun hæveautomater ved banker. Undgå fritstående gade-ATM.</li>
@@ -217,10 +250,35 @@ function renderProgram(){
     const tl=document.createElement('div'); tl.className='timeline';
     day.items.forEach(it=>{
       const el=document.createElement('div'); el.className='item';
+      const ico = iconFor(it);
+      // basislinje
       el.innerHTML = `
         <div class="time">${it.t}</div>
         <div class="title">${it.title}</div>
-        <div class="note">${it.note || ''}</div>`;
+        ${it.note?`<div class="note">${it.note}</div>`:''}
+      `;
+      // #4 foldout: vis hvis der er note eller ikon
+      if (it.note || ico){
+        const details = document.createElement('details');
+        const sum = document.createElement('summary');
+        sum.textContent = 'Detaljer';
+        details.appendChild(sum);
+        if(ico){
+          const img = document.createElement('img');
+          img.className='thumb';
+          img.alt='illustration';
+          img.src=ico;
+          details.appendChild(img);
+        }
+        // gentag note også i foldout, hvis den findes
+        if(it.note){
+          const p = document.createElement('div');
+          p.className='note';
+          p.innerHTML = it.note;
+          details.appendChild(p);
+        }
+        el.appendChild(details);
+      }
       tl.appendChild(el);
     });
     card.appendChild(tl);
@@ -259,7 +317,7 @@ document.getElementById('dl').onclick = () => {
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'belgrade_boys_trip_retro.html';
+      a.download = 'belgrade_boys_trip.html';
       document.body.appendChild(a);
       a.click();
       a.remove();
