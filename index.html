@@ -67,7 +67,7 @@ ul.note li{margin:12px 0 14px;line-height:1.55}
 
 <script>
 /* ====== TABS ====== */
-const SECTIONS=["Program","Praktiske råd","Kultura","Mini-ordbog"];
+const SECTIONS=["Program","Praktiske råd","Tito","Mini-ordbog"];
 let activeTab=0;
 const tabsEl=document.getElementById('tabs');
 const contentEl=document.getElementById('content');
@@ -171,8 +171,8 @@ const CHEATSHEET_HTML=`
 <div class="note"><strong>Kafana:</strong> En traditionel serbisk taverne med lokal mad, rakija og levende musik. Her spiser man, drikker og ender ofte med at synge med husorkestret.</div>
 </div>`;
 
-/* ====== KULTURA ====== */
-const KULTURA_HTML=`
+/* ====== TITO ====== */
+const TITO_HTML=`
 <div class="card">
 <h2>Hvem var Tito?</h2>
 <div class="note">Josip Broz Tito (1892–1980) var den legendariske leder, der samlede og styrede Jugoslavien efter 2. Verdenskrig. Han var både partisanhelt, diktator og karismatisk verdensfigur – en mand, der kunne få både Øst og Vest til at smile til ham på samme tid.</div>
@@ -226,9 +226,9 @@ function renderProgram(){
   contentEl.appendChild(villa);
 }
 function renderCheats(){contentEl.innerHTML=CHEATSHEET_HTML;}
-function renderKultura(){contentEl.innerHTML=KULTURA_HTML;}
+function renderTito(){contentEl.innerHTML=TITO_HTML;}
 function renderOrdbog(){contentEl.innerHTML=ORDBOG_HTML;}
-function renderContent(){if(activeTab===0)renderProgram();if(activeTab===1)renderCheats();if(activeTab===2)renderKultura();if(activeTab===3)renderOrdbog();}
+function renderContent(){if(activeTab===0)renderProgram();if(activeTab===1)renderCheats();if(activeTab===2)renderTito();if(activeTab===3)renderOrdbog();}
 function init(){renderTabs();renderContent();}
 init();
 
